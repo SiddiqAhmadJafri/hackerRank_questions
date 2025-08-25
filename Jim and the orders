@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+int com(const void *a,const void *b)
+{
+const  long int *x=(const long int*)a;
+const long int *y=(const  long int*)b;return(*x>*y)-(*x<*y);
+}
+int main() {/* Enter your code here. Read input from STDIN. Print output to STDOUT */
+int n;
+long int t1,d1;
+scanf("%d",&n);
+int i,j;
+long int t[n],d[n],a[n];
+for(i=0;i<n;i++)
+{scanf("%ld %ld",&t[i],&d[i]);
+}
+for(i=0;i<n;i++)
+t[i]+=d[i];
+for(i=0;i<n;i++)
+a[i]=t[i];
+qsort(t,n,sizeof(long int),com);
+for(i=0;i<n;i++)
+{
+for(j=0;j<n;j++)
+{
+if(t[i]==a[j] && a[j]!=0){
+printf("%d ",j+1);
+a[j]=0;}
+}
+}return 0;
+}
