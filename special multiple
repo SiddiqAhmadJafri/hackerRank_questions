@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+#include <algorithm> // For std::reverse
+
+std::string solve(int n) {
+    long long i = 1;
+    while (true) {
+        std::string binary_repr = "";
+        long long temp = i;
+        while (temp > 0) {
+            binary_repr += (temp % 2 == 0 ? '0' : '9');
+            temp /= 2;
+        }
+        std::reverse(binary_repr.begin(), binary_repr.end()); // Reverse to get correct order
+
+        long long candidate = std::stoll(binary_repr); // Convert to long long
+        if (candidate % n == 0) {
+            return binary_repr;
+        }
+        i++;
+    }
+}
+
+int main() {
+    int t;
+    std::cin >> t;
+    while (t--) {
+        int n;
+        std::cin >> n;
+        std::cout << solve(n) << std::endl;
+    }
+    return 0;
+}
