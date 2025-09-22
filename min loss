@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <map>
+
+long minimumLoss(std::vector<long> price) {
+    // Create a vector of pairs to store price and original index
+    std::vector<std::pair<long, int>> indexedPrices(price.size());
+    for (int i = 0; i < price.size(); ++i) {
+        indexedPrices[i] = {price[i], i};
+    }
+
+    // Sort the indexedPrices based on price in ascending order
+    std::sort(indexedPrices.begin(), indexedPrices.end());
+
+    long minLoss = -1; // Initialize with a value indicating no loss found yet
+
+    // Iterate through the sorted prices and find the minimum loss
+    for (int i = 0; i < indexedPrices.size() - 1; ++i) {
+        long buyPrice = indexedPrices[i + 1].first;
+        long sellPrice = indexedPrices[i].first;
+        int buyIndex = indexedPrices[i + 1].second;
+        int sellIndex = indexedPrices[i].second;
+
+        // Check if the buy year is before the sell year
+        if (buyIndex < sellIndex) {
+            long currentLoss = buyPrice - sellPrice;
+            if (minLoss == -1 || currentLoss < minLoss) {
+                minLoss = currentLoss;
+            }
+        }
+    }
+    return minLoss;
+}
+
+int main() {
+    int n;
+    std::cin >> n;
+    std::vector<long> price(n);
+    for (int i = 0; i < n; ++i) {
+        std::cin >> price[i];
+    }
+    long result = minimumLoss(price);
+    std::cout << result << std::endl;
+    return 0;
+}
