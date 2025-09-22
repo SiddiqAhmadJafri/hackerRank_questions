@@ -1,0 +1,28 @@
+#include <iostream>
+
+long strangeGrid(int r, int c) {
+    long base_value;
+
+    // Calculate the starting value for the block of 10 numbers
+    // Each pair of rows (r=1,2; r=3,4; etc.) contains 10 numbers.
+    // So, (r-1)/2 gives us the number of full 10-number blocks before the current row.
+    base_value = (long)(r - 1) / 2 * 10;
+
+    if (r % 2 != 0) { // Odd row (1, 3, 5, ...)
+        // Odd rows start with an even number (0, 10, 20...) and contain even numbers.
+        // The c-th element (1-indexed) in an odd row is base_value + 2 * (c-1).
+        return base_value + 2 * (c - 1);
+    } else { // Even row (2, 4, 6, ...)
+        // Even rows start with an odd number (1, 11, 21...) and contain odd numbers.
+        // The c-th element (1-indexed) in an even row is base_value + 2 * (c-1) + 1.
+        return base_value + 2 * (c - 1) + 1;
+    }
+}
+
+int main() {
+    int r, c;
+    std::cin >> r >> c;
+    long result = strangeGrid(r, c);
+    std::cout << result << std::endl;
+    return 0;
+}
