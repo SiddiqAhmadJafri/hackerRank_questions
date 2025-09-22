@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T;
+    if (!(cin >> T)) return 0;
+    while (T--) {
+        unsigned long long n;
+        cin >> n;
+        int moves = 0;
+
+        while (n > 1) {
+            // if n is power of two
+            if ((n & (n - 1)) == 0) {
+                n >>= 1;
+            } else {
+                // highest power of two less than n:
+                // find index of highest set bit
+                int shift = 63 - __builtin_clzll(n); // position of msb (0-based)
+                unsigned long long highest = 1ULL << shift;
+                if (highest == n) {
+                    // shouldn't happen due to check above, but safe-guard
+                    n >>= 1;
+                } else {
+                    n -= highest;
+                }
+            }
+            ++moves;
+        }
+
+        cout << (moves % 2 ? "Louise" : "Richard") << '\n';
+    }
+    return 0;
+}
