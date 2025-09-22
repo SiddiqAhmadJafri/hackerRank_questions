@@ -1,1 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <numeric> // For std::accumulate
+#include <algorithm> // For std::sort
 
+std::string organizingContainers(std::vector<std::vector<int>> container) {
+    int n = container.size();
+
+    // Calculate the sum of balls in each container (row sums)
+    std::vector<long long> container_capacities(n);
+    for (int i = 0; i < n; ++i) {
+        container_capacities[i] = std::accumulate(container[i].begin(), container[i].end(), 0LL);
+    }
+
+    // Calculate the total count of each ball type (column sums)
+    std::vector<long long> ball_type_counts(n);
+    for (int j = 0; j < n; ++j) {
+        for (int i = 0; i < n; ++i) {
+            ball_type_counts[j] += container[i][j];
+        }
+    }
+
+    // Sort both vectors
+    std::sort(container_capacities.begin(), container_capacities.end());
+    std::sort(ball_type_counts.begin(), ball_type_counts.end());
+
+    // Compare the sorted vectors
+    if (container_capacities == ball_type_counts) {
+        return "Possible";
+    } else {
+        return "Impossible";
+    }
+}
+
+int main() {
+    // Example usage (you would typically read input from stdin in HackerRank)
+    std::vector<std::vector<int>> test_container = {
+        {1, 1},
+        {1, 1}
+    };
+    std::cout << organizingContainers(test_container) << std::endl; // Expected: Possible
+
+    std::vector<std::vector<int>> test_container2 = {
+        {0, 2},
+        {1, 1}
+    };
+    std::cout << organizingContainers(test_container2) << std::endl; // Expected: Impossible
+
+    return 0;
+}
