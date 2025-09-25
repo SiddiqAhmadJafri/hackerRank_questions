@@ -1,0 +1,24 @@
+#include <iostream>
+
+long strangeCounter(long t) {
+    long remainder = 3; // Initial value of the counter
+    
+    // Find which cycle 't' falls into
+    while (t > remainder) {
+        t -= remainder;     // Reduce 't' by the length of the completed cycle
+        remainder *= 2;     // Double the initial value for the next cycle
+    }
+    
+    // Calculate the value at time 't' within the current cycle
+    // The value at the start of the current cycle is 'remainder'.
+    // The value decreases by 1 for each unit of time passed in the current cycle.
+    return remainder - t + 1;
+}
+
+int main() {
+    long t;
+    std::cin >> t;
+    long result = strangeCounter(t);
+    std::cout << result << std::endl;
+    return 0;
+}
