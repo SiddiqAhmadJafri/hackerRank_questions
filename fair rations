@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <numeric> // Required for std::accumulate if used for sum check
+
+std::string fairRations(std::vector<int> B) {
+    int loaves_distributed = 0;
+    int n = B.size();
+
+    // Iterate through the array up to the second-to-last element
+    for (int i = 0; i < n - 1; ++i) {
+        // If the current person has an odd number of loaves
+        if (B[i] % 2 != 0) {
+            // Give a loaf to the current person and their neighbor
+            B[i]++;
+            B[i + 1]++;
+            // Increment the total distributed loaves by 2
+            loaves_distributed += 2;
+        }
+    }
+
+    // After the loop, check the last person's loaves
+    if (B[n - 1] % 2 != 0) {
+        // If the last person still has an odd number of loaves, it's impossible
+        return "NO";
+    } else {
+        // Otherwise, return the total loaves distributed as a string
+        return std::to_string(loaves_distributed);
+    }
+}
+
+int main() {
+    // Example usage (HackerRank provides the main function and input handling)
+    // For local testing:
+    int n;
+    std::cin >> n;
+    std::vector<int> B(n);
+    for (int i = 0; i < n; ++i) {
+        std::cin >> B[i];
+    }
+
+    std::cout << fairRations(B) << std::endl;
+
+    return 0;
+}
