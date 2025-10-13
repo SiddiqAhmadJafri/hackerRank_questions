@@ -1,0 +1,25 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+long long solve(std::string n) {
+    const int MOD = 1e9 + 7;
+    long long totalSum = 0;
+    long long currentLastDigitSum = 0; // Sum of substrings ending at current position
+
+    for (int i = 0; i < n.length(); ++i) {
+        long long digit = n[i] - '0';
+        // The current digit forms new substrings ending at 'i'.
+        // These are: the digit itself, and appending the digit to all substrings ending at 'i-1'.
+        currentLastDigitSum = (currentLastDigitSum * 10 + digit * (i + 1)) % MOD;
+        totalSum = (totalSum + currentLastDigitSum) % MOD;
+    }
+    return totalSum;
+}
+
+int main() {
+    std::string s;
+    std::cin >> s;
+    std::cout << solve(s) << std::endl;
+    return 0;
+}
