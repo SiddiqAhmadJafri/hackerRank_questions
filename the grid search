@@ -1,0 +1,61 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+void test(vector<string>& grid, vector<string>& ptrn, int rg, int cg, int rp, int cp) {
+    const int kmax = rg - rp;
+    const int jmax = cg - cp;
+    for (int k = 0; k <= kmax; ++k) {
+        for (int j = 0; j <= jmax; ++j) {
+            bool mismatch = false;
+            for (int ik = 0; ik < rp; ++ik) {
+                for (int ij = 0; ij < cp; ++ij) {
+                    if (grid[ik + k][ij + j] != ptrn[ik][ij]) {
+                        mismatch = true;
+                        break;
+                    }
+                }
+                if (mismatch == true)
+                    break;
+            }
+            if (mismatch == false) {
+                cout << "YES" << endl;
+                return;
+            }
+        }
+    }
+    cout << "NO" << endl;
+    return;    
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    int t; cin >> t;
+    
+    for (int i = 0; i < t; ++i) {
+        
+        int rg; cin >> rg;
+        int cg; cin >> cg;
+        vector<string> grid(rg);
+        for (int j = 0; j < rg; ++j) {
+            cin >> grid[j];
+            //cerr << grid[j] << endl;
+        }
+        //cerr << endl;
+        
+        int rp; cin >> rp;
+        int cp; cin >> cp;
+        vector<string> ptrn(rp);
+        for (int j = 0; j < rp; ++j) {
+            cin >> ptrn[j];
+            //cerr << ptrn[j] << endl;
+        }
+        //cerr << endl;
+        
+        test(grid, ptrn, rg, cg, rp, cp);
+    }
+    return 0;
+}
